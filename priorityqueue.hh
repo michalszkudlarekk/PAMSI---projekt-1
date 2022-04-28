@@ -3,11 +3,11 @@
 #include <iostream>
 #include <sstream>
 
-struct data
+struct data1
 {
-    data *next, *previous;
+    data1 *next, *previous;
     int priority, priority1; /* Zmienna priority1 potrzebna jest tylko do mieszania wiadomosci */
-    std::string information;
+    std::string info;
     bool dataType = true; /* zmiena datatype rowniez potrzebna jest tylko do mieszania wiadomosci */
 };
 
@@ -15,7 +15,7 @@ struct data2 /* Struktura potrzebna do mieszania wiadomosci */
 {
     data2 *next, *previous;
     int priority, priority1;
-    std::string information;
+    std::string info;
     bool dataType = false;
 };
 
@@ -38,7 +38,7 @@ public:
     int value();
     type least();
     type removeSmallest();
-    void add(int priority, std::string information);
+    void add(int priority, std::string info);
 };
 
 template <typename type>
@@ -94,7 +94,7 @@ type queue<type>::removeSmallest()
     ptr = ptr1 = front;
     if (queue<type>::checkIfEmpty())
     {
-        throw std::logic_error("Lista jest pusta");
+        throw std::logic_error("Lista jest pusta!");
     }
     do
         if (ptr->dataType)
@@ -111,7 +111,7 @@ type queue<type>::removeSmallest()
         }
     while (ptr1 != back);
 
-    if (ptr == front &&ptr = back)
+    if (ptr == front && ptr == back)
     {
         front = back = NULL;
     }
