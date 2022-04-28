@@ -6,24 +6,26 @@
 struct data
 {
     data *next, *previous;
-    int priority, priority1;
-    bool datatype = true;
+    int priority, priority1; /* Zmienna priority1 potrzebna jest tylko do mieszania wiadomosci */
+    std::string information;
+    bool dataType = true; /* zmiena datatype rowniez potrzebna jest tylko do mieszania wiadomosci */
 };
 
-struct data2
+struct data2 /* Struktura potrzebna do mieszania wiadomosci */
 {
     data2 *next, *previous;
-    int priority, priority2;
-    std::string info;
-    bool datatype = false;
+    int priority, priority1;
+    std::string information;
+    bool dataType = false;
 };
 
+/* Szablon potrzebny do mieszania */
 template <typename type>
 class queue
 {
 private:
-    type front *;
-    type back *;
+    type *front;
+    type *back;
     int size;
 
 public:
@@ -32,14 +34,15 @@ public:
         front = back = NULL;
         size = 0;
     };
-    bool checkifempty();
+    bool checkIfEmpty();
     int value();
-    type least() : type DELLleast();
-    void add(int priority, std::string info)
+    type least();
+    type delateLeast();
+    void add(int priority, std::string information)
 };
 
 template <typename type>
-bool queue<type>::checkifempty()
+bool queue<type>::checkIfEmpty()
 {
     return !front;
 }
@@ -53,9 +56,9 @@ int queue<type>::value()
 template <typename type>
 type queue<type>::least()
 {
-    if (queue<type>::checkifempty())
+    if (queue<type>::checkIfEmpty())
     {
-        throw std::logic_error("Lista jest pusta!");
+        throw std::logic_error("Podana lista jest pusta!");
     }
     type *ptr1, *ptr2;
     ptr1 = ptr2 = front;
@@ -63,7 +66,7 @@ type queue<type>::least()
     {
         do
         {
-            if (ptr1->datatype)
+            if (ptr1->dataType)
             {
                 ptr2 = ptr2->next;
                 if (ptr2->priority < ptr1->priority)
@@ -73,7 +76,7 @@ type queue<type>::least()
                 else
                 {
                     ptr2 = ptr2->next;
-                    if (ptr2->priority2 < ptr1->priority2)
+                    if (ptr2->priority1 < ptr1->priority1)
                         ptr1 = ptr2;
                 }
             }
@@ -81,4 +84,81 @@ type queue<type>::least()
         } while (ptr2 != back);
     }
     return *ptr1;
+}
+
+template <typename type>
+type queue<type>::RemoveSmallest()
+{
+    size--;
+    type *ptr, *ptr1, object;
+    ptr = ptr1 = front;
+    if (queue<type>::checkIfEmpty())
+    {
+        throw std::logic_error("Lista jest pusta");
+    }
+    do
+        if (ptr->dataType)
+        {
+            ptr1 = ptr1->next;
+            if (ptr1->priority < ptr->priority)
+                ptr = ptr1;
+        }
+        else
+        {
+            ptr1 = ptr1->next;
+            if (ptr1->priority1 < ptr->priority1)
+                ptr = ptr1;
+        }
+    while (ptr1 != back);
+
+    if (ptr == front &&ptr = back)
+    {
+        front = back = NULL;
+    }
+    else if (ptr == front)
+    {
+        front = ptr->next;
+        front->previous = front;
+    }
+    else if (ptr == back)
+    {
+        back = ptr->previous;
+        back->next = back;
+    }
+    else
+    {
+        (ptr->next)->previous = (ptr->previous);
+        (ptr->previous)->next = (ptr->next);
+    }
+    object = *ptr;
+    delete ptr;
+    ptr = NULL;
+    return object;
+}
+template <typename type>
+void queue<type>::Add(int priority, std::string info)
+{
+    size++;
+    type *ptr;
+    ptr = new type;
+    ptr->info = info;
+    ptr->priority = priority;
+    if (!ptr->dataType)
+    {
+        ptr->priority1 = rand();
+    }
+    if (front == NULL)
+    {
+        front = ptr;
+        back = ptr;
+        ptr->next = back;
+        ptr - > previous = front;
+    }
+    else
+    {
+        ptr->next = front;
+        front->previous = ptr;
+        front = ptr;
+        ptr->previous = front;
+        }
 }
