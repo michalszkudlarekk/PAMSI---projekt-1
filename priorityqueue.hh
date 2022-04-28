@@ -37,8 +37,8 @@ public:
     bool checkIfEmpty();
     int value();
     type least();
-    type delateLeast();
-    void add(int priority, std::string information)
+    type removeSmallest();
+    void add(int priority, std::string information);
 };
 
 template <typename type>
@@ -87,7 +87,7 @@ type queue<type>::least()
 }
 
 template <typename type>
-type queue<type>::RemoveSmallest()
+type queue<type>::removeSmallest()
 {
     size--;
     type *ptr, *ptr1, object;
@@ -136,7 +136,7 @@ type queue<type>::RemoveSmallest()
     return object;
 }
 template <typename type>
-void queue<type>::Add(int priority, std::string info)
+void queue<type>::add(int priority, std::string info)
 {
     size++;
     type *ptr;
@@ -152,7 +152,7 @@ void queue<type>::Add(int priority, std::string info)
         front = ptr;
         back = ptr;
         ptr->next = back;
-        ptr - > previous = front;
+        ptr->previous = front;
     }
     else
     {
@@ -160,5 +160,5 @@ void queue<type>::Add(int priority, std::string info)
         front->previous = ptr;
         front = ptr;
         ptr->previous = front;
-        }
+    }
 }
