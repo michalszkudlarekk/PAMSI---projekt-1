@@ -8,4 +8,4 @@ main.o: priorityqueue.cpp priorityqueue.hh
 	g++ -c -o priorityqueue.o priorityqueue.cpp
 
 clean:
-	rm -f *.o program
+	rm -f *.o program	
