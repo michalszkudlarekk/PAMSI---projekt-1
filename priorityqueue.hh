@@ -3,12 +3,12 @@
 #include <iostream>
 #include <sstream>
 
-struct data1
+struct data1 /* Rzeczywista struktura */
 {
     data1 *next, *previous;
     int priority, priority1; /* Zmienna priority1 potrzebna jest tylko do mieszania wiadomosci */
     std::string info;
-    bool dataType = true; /* zmiena datatype rowniez potrzebna jest tylko do mieszania wiadomosci */
+    bool dataType = true; /*dataType rowniez potrzebna jest tylko do mieszania wiadomosci */
 };
 
 struct data2 /* Struktura potrzebna do mieszania wiadomosci */
@@ -37,8 +37,8 @@ public:
     bool checkIfEmpty();
     int value();
     type least();
-    type removeSmallest();
-    void add(int priority, std::string info);
+    type pull();
+    void push(int priority, std::string info);
 };
 
 template <typename type>
@@ -54,7 +54,7 @@ int queue<type>::value()
 }
 
 template <typename type>
-type queue<type>::least()
+type queue<type>::least() /*funkcja odpowiedzialna za znalezienie najmniej priorytetowej wiadomosci */
 {
     if (queue<type>::checkIfEmpty())
     {
@@ -87,7 +87,7 @@ type queue<type>::least()
 }
 
 template <typename type>
-type queue<type>::removeSmallest()
+type queue<type>::pull() /*funkcja odpowiedzialna za usuniecie najmniej priorytetowej wiadomosci */
 {
     size--;
     type *ptr, *ptr1, object;
@@ -135,24 +135,25 @@ type queue<type>::removeSmallest()
     ptr = NULL;
     return object;
 }
-template <typename type>
-void queue<type>::add(int priority, std::string info)
+
+template <typename type> /* Funkcja odpowiedzialna za dodanie poszczególnych obiektów do kolejki */
+void queue<type>::push(int priority, std::string info)
 {
-    size++;
+    size++; // 1
     type *ptr;
-    ptr = new type;
-    ptr->info = info;
-    ptr->priority = priority;
+    ptr = new type;           // 1 obliczenie złożoności obliczeniowej
+    ptr->info = info;         // 1
+    ptr->priority = priority; // 1
     if (!ptr->dataType)
     {
-        ptr->priority1 = rand();
+        ptr->priority1 = rand(); // 1
     }
     if (front == NULL)
     {
-        front = ptr;
-        back = ptr;
-        ptr->next = back;
-        ptr->previous = front;
+        front = ptr;           // 1
+        back = ptr;            // 1
+        ptr->next = back;      // 1
+        ptr->previous = front; // 1
     }
     else
     {
@@ -162,3 +163,6 @@ void queue<type>::add(int priority, std::string info)
         ptr->previous = front;
     }
 }
+
+// push nie zalezy od ilosci danych wejsciowych
+// O(1) - bez zlozonosci obliczeniowej , f(n)=9
